@@ -4,7 +4,7 @@ import ShortUrl from './model';
 export class Service {
     // private logger: Logger = new Logger('shortUrl-service');
 
-    public generateShortUrl = async(link: any): Promise<{ status: number, json: any }> => {
+    generateShortUrl = async(link: any): Promise<{ status: number, json: any }> => {
     
         let shortUrl;
         if (this.isEmpty(link)) {
