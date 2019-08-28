@@ -1,5 +1,4 @@
 # @hiride/route_shortener
 
-[![npm (scoped)]
-(https://img.shields.io/npm/v/@hiride/route_shortener.svg)]
-(https://github.com/LorsK/route_shortener)
+<a href="https://img.shields.io/npm/v/@hiride/route_shortener.svg"><img src="https://img.shields.io/npm/v/@hiride/route_shortener.svg" alt="npm version"></a>
+
