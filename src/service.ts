@@ -1,5 +1,6 @@
 // import { Logger } from '../utils/logger.util';
 import ShortUrl from './model';
+import jsonfile from 'jsonfile';
 
 export class Service {
     // private logger: Logger = new Logger('shortUrl-service');
@@ -11,9 +12,13 @@ export class Service {
             return { status: 400, json: { msg: 'Invalid Request', data: {}} };
         }
         // Create a shorturl object
-        shortUrl = new ShortUrl({
-            url: link,
-        });
+        // shortUrl = new ShortUrl({
+        //     url: link,
+        // });
+        shortUrl = {
+            url: link
+        };
+
         const response = await this.createAndSaveShortUrl(shortUrl);
         return response;
     }
@@ -22,20 +27,28 @@ export class Service {
         // Generate a random string to replace the url
         let randomStr = this.generateRandomString();
         // Check if the random string already exist in DB 
-        let result = await ShortUrl.findOne({ urlCode: randomStr });
+        // let result = await ShortUrl.findOne({ urlCode: randomStr });
 
-        while (!this.isEmpty(result)) {
-            randomStr = this.generateRandomString();
-            result = await ShortUrl.findOne({ urlCode: randomStr });
-        }
+        const file = '/tmp/data.json'
+        // jsonfile.writeFileSync(file, shortUlrObj, { flag: 'a' })
 
-        shortUlrObj.urlCode = randomStr;
+        // while (!this.isEmpty(result)) {
+        //     randomStr = this.generateRandomString();
+        //     result = await ShortUrl.findOne({ urlCode: randomStr });
+        // }
+        let data = await jsonfile.readFileSync(file)
+        // TODO: check if random string or link already exists
+
+        data[randomStr] = shortUlrObj
+    
+        await jsonfile.writeFileSync(file, data);
+        // shortUlrObj.urlCode = randomStr;
         // Not a duplicate
-        shortUlrObj.save(err => {
-            if (err) {
-                return { status: 400, json: { success: false, msg: err, data: shortUlrObj } };
-            }
-        });
+        // shortUlrObj.save(err => {
+        //     if (err) {
+        //         return { status: 400, json: { success: false, msg: err, data: shortUlrObj } };
+        //     }
+        // });
         return { status: 200, json: { success: true,  data: `/${randomStr}`} };
 
     }

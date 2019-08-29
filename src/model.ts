@@ -19,6 +19,14 @@ const shortUrlsSchema = new Schema({
     }
 })
 
+
+interface shortUrlSchema {
+    url: String;
+    urlCode: String;
+    hits: Number;
+    createdDate: Date;
+}
+
 const ShortUrl = mongoose.model('ShortUrl', shortUrlsSchema, 'ShortUrl');
 
 export default ShortUrl;
